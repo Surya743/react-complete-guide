@@ -1,6 +1,7 @@
+import { useState } from "react";
 import Expenses from "./Components/Expenses/Expenses";
 import NewExpense from "./Components/NewExpenses/NewExpenses";
-const expenses = [
+const dummy_expenses = [
   {
     id: 'e1',
     title: 'Toilet Paper',
@@ -21,14 +22,26 @@ const expenses = [
     date: new Date(2021, 5, 12),
   },
 ];
-const expenseHandler = (expenseData) => {
-console.log(expenseData);
-};
+
 function App() {
+  const [expenses,setExpenses] = useState(dummy_expenses);
+  const expenseHandler = (expenseData) => {
+    setExpenses((previous_expense_data) =>{
+      return [expenseData, ...previous_expense_data]
+    });
+  
+  };
+
+ 
+  
+  const filterHandler = (selected_year) => {
+    console.log(selected_year);
+  };
+
   return (
     <div>
-      <NewExpense onAddExpense={expenseHandler}/>
-      <Expenses items={expenses} />
+      <NewExpense onAddExpense={expenseHandler} />
+      <Expenses items={expenses} onChangeFilteredYear={filterHandler} />
     </div>
 
   );
